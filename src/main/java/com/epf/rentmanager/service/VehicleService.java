@@ -29,7 +29,7 @@ public class VehicleService {
 	
 	public long create(Vehicle vehicle) throws ServiceException {
 		try {
-			return VehicleDao.getInstance().create(vehicle);
+			return vehicleDao.create(vehicle);
 		} catch(DaoException e){
 			e.printStackTrace();
 			throw new ServiceException();

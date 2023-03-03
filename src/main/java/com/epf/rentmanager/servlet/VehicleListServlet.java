@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/cars")
-public class VehicleListServlet extends HttpServlet {
+public class VehicleListServlet extends HomeServlet {
 
     /**
      *

@@ -50,6 +50,7 @@ public class ClientDao {
 			if (resultSet.next()) {
 				id = resultSet.getInt(1);
 			}
+			ps.close();
 			return id;
 		} catch (SQLException e) {
 			throw new DaoException();
@@ -86,6 +87,8 @@ public class ClientDao {
 			String prenom = rs.getString("prenom");
 			String email = rs.getString("email");
 			LocalDate date = rs.getDate("naissance").toLocalDate();
+			connection.close();
+			pstatement.close();
 			return new Client((int) id,nom,prenom,email,date);
 
 		} catch(SQLException e){
@@ -110,7 +113,8 @@ public class ClientDao {
 
 				clients.add(new Client(id,nom,prenom,email,date));
 			}
-
+			connection.close();
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException();
@@ -127,6 +131,8 @@ public class ClientDao {
 			while (rs.next()){
 				nb_client = rs.getInt(nb_client);
 			}
+			connection.close();
+			statement.close();
 			return nb_client;
 		} catch (SQLException e) {
 			e.printStackTrace();

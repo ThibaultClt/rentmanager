@@ -114,6 +114,8 @@ public class ReservationDao {
 			while (rs.next()){
 				nb_reservation = rs.getInt(nb_reservation);
 			}
+			connection.close();
+			statement.close();
 			return nb_reservation;
 		} catch (SQLException e) {
 			e.printStackTrace();

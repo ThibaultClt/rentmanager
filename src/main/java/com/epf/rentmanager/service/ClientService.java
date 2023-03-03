@@ -31,7 +31,7 @@ public class ClientService {
 	
 	public long create(Client client) throws ServiceException {
 		try {
-			return ClientDao.getInstance().create(client);
+			return clientDao.create(client);
 		} catch(DaoException e){
 			e.printStackTrace();
 			throw new ServiceException();
@@ -54,7 +54,7 @@ public class ClientService {
 
 	public List<Client> findAll() throws ServiceException {
 		try {
-			return ClientDao.getInstance().findAll();
+			return clientDao.findAll();
 		} catch(DaoException e){
 			e.printStackTrace();
 			throw new ServiceException();

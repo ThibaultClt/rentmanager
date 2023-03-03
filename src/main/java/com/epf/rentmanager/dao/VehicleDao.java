@@ -24,7 +24,7 @@ public class VehicleDao {
 		return instance;
 	}
 	
-	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur, modele, nb_places) VALUES(?, ?, ?);";
+	private static final String CREATE_VEHICLE_QUERY = "INSERT INTO Vehicle(constructeur, nb_places) VALUES(?, ?);";
 	private static final String DELETE_VEHICLE_QUERY = "DELETE FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLE_QUERY = "SELECT id, constructeur, nb_places FROM Vehicle WHERE id=?;";
 	private static final String FIND_VEHICLES_QUERY = "SELECT id, constructeur, nb_places FROM Vehicle;";
@@ -44,6 +44,8 @@ public class VehicleDao {
 			if (resultSet.next()) {
 				id = resultSet.getInt(1);
 			}
+			ps.close();
+
 			return id;
 		} catch (SQLException e) {
 			throw new DaoException();
@@ -56,6 +58,7 @@ public class VehicleDao {
 			ps.setInt(1, vehicle.getId()); // ATTENTION /!\ : l’indice commence par 1, contrairement aux tableaux
 
 			if (ps.executeUpdate() != 0) {
+				ps.close();
 				return 1;
 			}
 			else{
@@ -77,6 +80,8 @@ public class VehicleDao {
 			rs.next();
 			String constructeur = rs.getString("constructeur");
 			int nbPlaces = rs.getInt("nb_places");
+			connection.close();
+			pstatement.close();
 			return new Vehicle((int) id,constructeur,nbPlaces);
 
 		} catch(SQLException e){
@@ -100,7 +105,8 @@ public class VehicleDao {
 
 				vehicles.add(new Vehicle(id,constructeur,nbPlaces));
 			}
-
+			connection.close();
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DaoException();
