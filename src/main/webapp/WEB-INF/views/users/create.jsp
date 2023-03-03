@@ -52,7 +52,7 @@
                                     <label for="naissance" class="col-sm-2 control-label">Naissance</label>
 
                                     <div class="col-sm-10">
-                                         <input type="naissance" class="form-control" id="naissance" name="naissance" placeholder="Date de naissance">
+                                         <input type="date" class="form-control" id="naissance" name="naissance" placeholder="Date de naissance">
                                     </div>
                                 </div>
                             </div>

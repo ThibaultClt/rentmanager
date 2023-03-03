@@ -29,7 +29,7 @@ public class ReservationService {
 
     public long create(Reservation reservation) throws ServiceException {
         try {
-            return ReservationDao.getInstance().create(reservation);
+            return reservationDao.create(reservation);
         } catch(DaoException e){
             e.printStackTrace();
             throw new ServiceException();

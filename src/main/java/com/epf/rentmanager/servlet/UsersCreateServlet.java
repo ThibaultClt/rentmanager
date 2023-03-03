@@ -37,11 +37,10 @@ public class UsersCreateServlet extends UserServlet {
             client.setEmail(email);
             client.setNaissance(naissance);
             clientService.create(client);
-            System.out.println(client);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
 //        response.sendRedirect("/rentmanager/src/main/webapp/WEB-INF/views/users/create.jsp");
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/list.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/create.jsp").forward(request, response);
     }
 }

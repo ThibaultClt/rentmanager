@@ -34,6 +34,25 @@
                                     <th>Fin</th>
                                     <th>Action</th>
                                 </tr>
+                                <c:forEach items="${reservations}" var="reservation">
+                                    <td>${reservation.client_id}.</td>
+                                    <td>${reservation.vehicle_id}</td>
+                                    <td>${reservation.debut}</td>
+                                    <td>${reservation.fin}</td>
+                                    <!--<td>John Doe</td>-->
+                                    <td>
+                                        <a class="btn btn-primary disabled" href="car-detail.html">
+                                            <i class="fa fa-play"></i>
+                                        </a>
+                                        <a class="btn btn-success disabled" href="#">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a class="btn btn-danger disabled" href="#">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </c:forEach>
                                 <tr>
                                     <td>1.</td>
                                     <td>Renault Clio</td>
