@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/cars/create")
-public class VehiclesCreate extends HttpServlet {
+public class VehicleCreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private ClientService clientService = ClientService.getInstance();
     private VehicleService vehicleService = VehicleService.getInstance();

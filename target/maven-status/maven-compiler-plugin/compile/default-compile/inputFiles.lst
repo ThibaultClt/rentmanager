@@ -5,8 +5,8 @@ C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\DetailsUser.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\exception\ServiceException.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\service\ClientService.java
+C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleListServlet.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\service\VehicleService.java
-C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleServlet.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\model\Vehicle.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\UsersCreate.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\dao\ReservationDao.java
