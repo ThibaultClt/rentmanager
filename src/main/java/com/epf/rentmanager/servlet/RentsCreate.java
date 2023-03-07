@@ -12,6 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.*;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -20,9 +22,17 @@ public class RentsCreate extends ReservationServlet {
     private static final long serialVersionUID = 1L;
     private ClientService clientService = ClientService.getInstance();
     private VehicleService vehicleService = VehicleService.getInstance();
+    private ReservationService reservationService = ReservationService.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            request.setAttribute("vehicles", vehicleService.findAll());
+            request.setAttribute("clients", clientService.findAll());
+        } catch (ServiceException e){
+            e.printStackTrace();
+        }
+
         this.getServletContext().getRequestDispatcher("/WEB-INF/views/rents/create.jsp").forward(request, response);
     }
 
@@ -40,11 +50,11 @@ public class RentsCreate extends ReservationServlet {
             reservation.setClient_id(client);
             reservation.setDebut(début);
             reservation.setFin(fin);
-            ReservationService.create(reservation);
+            reservationService.create(reservation);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-//        response.sendRedirect("/rentmanager/src/main/webapp/WEB-INF/views/users/create.jsp");
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/create.jsp").forward(request, response);
+        response.sendRedirect("/WEB-INF/views/rents/create.jsp");
+//        this.getServletContext().getRequestDispatcher("/WEB-INF/views/rents/create.jsp").forward(request, response);
     }
 }

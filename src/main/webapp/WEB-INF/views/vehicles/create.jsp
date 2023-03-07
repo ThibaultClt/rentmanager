@@ -38,6 +38,7 @@
 									<!-- Pour r�up�rer la valeur rentr�e dans un champ input de cette jsp au niveau de votre servlet -->
 									<!-- vous devez passer par les methodes getParameter de l'objet request, est sp�cifiant la valeur -->
 									<!-- de l'attribut "name" de l'input -->
+
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="Marque" required>
                                     </div>
