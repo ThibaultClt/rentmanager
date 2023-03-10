@@ -25,7 +25,7 @@
                     <!-- Horizontal Form -->
                     <div class="box">
                         <!-- form start -->
-                        <form class="form-horizontal" method="post" action="/rents/create">
+                        <form class="form-horizontal" method="post" >
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="car" class="col-sm-2 control-label">Voiture</label>
@@ -34,7 +34,7 @@
 
                                         <select class="form-control" id="car" name="car">
                                             <c:forEach items="${vehicles}" var="vehicle">
-                                                <option value="${vehicle.id}">${vehicle.toString()}</option>
+                                                <option value="${vehicle.id}">${vehicle.constructeur} ${vehicle.nb_places} places</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -54,16 +54,16 @@
                                     <label for="begin" class="col-sm-2 control-label">Date de debut</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="begin" name="begin" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                        <input type="date" class="form-control" id="begin" name="begin" required>
+
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="end" class="col-sm-2 control-label">Date de fin</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="end" name="end" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                        <input type="date" class="form-control" id="end" name="end" required>
+
                                     </div>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ package com.epf.rentmanager.servlet;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
+import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
@@ -42,19 +43,18 @@ public class RentsCreate extends ReservationServlet {
 // traitement du formulaire (appel à la méthode de sauvegarde)
         try {
             final Reservation reservation = new Reservation();
-            int voiture = Integer.parseInt(request.getParameter("car"));
-            int client = Integer.parseInt(request.getParameter("client"));
+            int id_voiture = Integer.parseInt(request.getParameter("car"));
+            int id_client = Integer.parseInt(request.getParameter("client"));
             LocalDate début = LocalDate.parse(request.getParameter("begin"));
             LocalDate fin = LocalDate.parse(request.getParameter("end"));
-            reservation.setVehicle_id(voiture);
-            reservation.setClient_id(client);
+            reservation.setVehicle_id(id_voiture);
+            reservation.setClient_id(id_client);
             reservation.setDebut(début);
             reservation.setFin(fin);
             reservationService.create(reservation);
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("/WEB-INF/views/rents/create.jsp");
-//        this.getServletContext().getRequestDispatcher("/WEB-INF/views/rents/create.jsp").forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/rents/create.jsp").forward(request, response);
     }
 }

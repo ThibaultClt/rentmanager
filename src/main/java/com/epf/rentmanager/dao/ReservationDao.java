@@ -50,6 +50,7 @@ public class ReservationDao {
 			if (resultSet.next()) {
 				id = resultSet.getInt(1);
 			}
+			ps.close();
 			return id;
 		} catch (SQLException e) {
 			throw new DaoException();
@@ -90,6 +91,8 @@ public class ReservationDao {
 				LocalDate fin = rs.getDate("fin").toLocalDate();
 				reservations.add(new Reservation((int) clientId,vehicle_id,debut,fin));
 			}
+			connection.close();
+			pstatement.close();
 		} catch(SQLException e){
 			e.printStackTrace();
 			throw new DaoException();
@@ -98,11 +101,52 @@ public class ReservationDao {
 	}
 	
 	public List<Reservation> findResaByVehicleId(long vehicleId) throws DaoException {
-		return new ArrayList<Reservation>();
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		try{
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement pstatement = connection.prepareStatement(FIND_RESERVATIONS_BY_VEHICLE_QUERY);
+			pstatement.setLong(1,vehicleId);
+			ResultSet rs = pstatement.executeQuery();
+
+			while (rs.next()){
+				int id = rs.getInt("id");
+				int client_id = rs.getInt("client_id");
+				LocalDate debut = rs.getDate("debut").toLocalDate();
+				LocalDate fin = rs.getDate("fin").toLocalDate();
+				reservations.add(new Reservation((int) client_id, (int) vehicleId,debut,fin));
+			}
+			connection.close();
+			pstatement.close();
+		} catch(SQLException e){
+			e.printStackTrace();
+			throw new DaoException();
+		}
+		return reservations;
 	}
 
 	public List<Reservation> findAll() throws DaoException {
-		return new ArrayList<Reservation>();
+		List<Reservation> reservations = new ArrayList<Reservation>();
+		try {
+			Connection connection = ConnectionManager.getConnection();
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery(FIND_RESERVATIONS_QUERY);
+
+			while (rs.next()){
+				int id = rs.getInt("id");
+				int client_id = rs.getInt("client_id");
+				int vehicle_id = rs.getInt("vehicle_id");
+				LocalDate debut = rs.getDate("debut").toLocalDate();
+				LocalDate fin = rs.getDate("fin").toLocalDate();
+
+				reservations.add(new Reservation(id,client_id,vehicle_id,debut,fin));
+			}
+			connection.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DaoException();
+		}
+		return reservations;
 	}
 
 	public long count() throws DaoException{

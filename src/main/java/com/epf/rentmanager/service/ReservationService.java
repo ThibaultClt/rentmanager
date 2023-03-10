@@ -6,7 +6,9 @@ import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
+import com.epf.rentmanager.model.Vehicle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationService {
@@ -65,8 +67,16 @@ public class ReservationService {
     }
 
     public List<Reservation> findAll() throws ServiceException {
+        List<Reservation> reservations = new ArrayList<Reservation>();
         try {
-            return this.reservationDao.findAll();
+            reservations = ReservationDao.getInstance().findAll();
+            for(int i =0; i<reservations.size(); i++){
+                Client client = ClientService.getInstance().findById(reservations.get(i).getClient_id());
+                reservations.get(i).setClient(client);
+                Vehicle vehicle = VehicleService.getInstance().findById(reservations.get(i).getVehicle_id());
+                reservations.get(i).setVehicle(vehicle);
+            }
+            return reservations;
         } catch(DaoException e){
             e.printStackTrace();
             throw new ServiceException();
