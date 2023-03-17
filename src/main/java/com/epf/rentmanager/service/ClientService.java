@@ -10,24 +10,18 @@ import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 
 import com.epf.rentmanager.dao.ClientDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ClientService {
 
+	@Autowired
 	private ClientDao clientDao;
-	public static ClientService instance;
-	
-	private ClientService() {
-		this.clientDao = ClientDao.getInstance();
+
+	private ClientService(ClientDao clientDao){
+		this.clientDao = clientDao;
 	}
-	
-	public static ClientService getInstance() {
-		if (instance == null) {
-			instance = new ClientService();
-		}
-		
-		return instance;
-	}
-	
 	
 	public long create(Client client) throws ServiceException {
 		try {
@@ -45,7 +39,7 @@ public class ClientService {
 		}
 
 		try {
-			return ClientDao.getInstance().findById(id);
+			return clientDao.findById(id);
 		} catch(DaoException e){
 			e.printStackTrace();
 			throw new ServiceException();
@@ -63,7 +57,7 @@ public class ClientService {
 
 	public long count() throws ServiceException {
 		try{
-			return ClientDao.getInstance().count();
+			return clientDao.count();
 		} catch (DaoException e){
 			e.printStackTrace();
 			throw new ServiceException();
