@@ -1,1 +1,3 @@
 epf\AppTest.class
+epf\rentmanager\service\ClientServiceTest.class
+epf\rentmanager\util\ClientTest.class

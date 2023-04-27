@@ -1,6 +1,14 @@
 package com.epf.rentmanager.model;
 
+import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.service.ClientService;
+import com.epf.rentmanager.service.ReservationService;
+
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Reservation {
 
     private int id;
@@ -27,8 +35,44 @@ public class Reservation {
     }
 
     public Reservation(){
-        
     }
+
+    public static boolean isBookedMore7Days(Reservation reservation) {
+        Period period = Period.between(reservation.getDebut(), reservation.getFin());
+        return period.getDays() > 7;
+    }
+
+    public static boolean isDateOk(Reservation reservation, ReservationService reservationService1) throws ServiceException {
+        List<Reservation> reservations = reservationService1.findResaByVehicleId(reservation.getVehicle_id());
+        LocalDate dateDebut = reservation.getDebut();
+        LocalDate dateFin = reservation.getFin();
+        boolean dateOK = true;
+        for(int i =0; i<reservations.size(); i++){
+            if (dateDebut.isAfter(reservations.get(i).getDebut()) && dateDebut.isBefore(reservations.get(i).getFin())){
+                dateOK = false;
+            }
+            if (dateFin.isAfter(reservations.get(i).getDebut()) && dateFin.isBefore(reservations.get(i).getFin())){
+                dateOK = false;
+            }
+            if (reservations.get(i).getDebut().isAfter(dateDebut) && reservations.get(i).getDebut().isBefore(dateFin)){
+                dateOK = false;
+            }
+            if (dateDebut.compareTo(reservations.get(i).getDebut()) == 0 || dateDebut.compareTo(reservations.get(i).getFin()) == 0){
+                dateOK = false;
+            }
+            if (dateFin.compareTo(reservations.get(i).getDebut()) == 0 || dateFin.compareTo(reservations.get(i).getFin()) == 0){
+                dateOK = false;
+            }
+        }
+        return dateOK;
+    }
+
+//    public static boolean isDateOver30(Reservation reservation, ReservationService reservationService1) throws ServiceException {
+//        List<Reservation> reservations = reservationService1.findResaByVehicleId(reservation.getVehicle_id());
+//        LocalDate dateDebut = reservation.getDebut();
+//        LocalDate dateFin = reservation.getFin();
+//
+//    }
 
     public Vehicle getVehicle() {
         return vehicle;

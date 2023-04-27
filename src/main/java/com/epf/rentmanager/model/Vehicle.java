@@ -1,5 +1,7 @@
 package com.epf.rentmanager.model;
 
+import java.time.Period;
+
 public class Vehicle {
 
     private int id;
@@ -13,6 +15,10 @@ public class Vehicle {
     }
 
     public Vehicle(){
+    }
+
+    public static boolean hasEnoughPlace(Vehicle vehicle) {
+        return (2 <= vehicle.nb_places && vehicle.nb_places <=9);
     }
 
     public int getId() {

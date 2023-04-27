@@ -38,18 +38,23 @@ public class VehicleCreateServlet extends VehicleListServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
-// traitement du formulaire (appel à la méthode de sauvegarde)
         try {
             final Vehicle vehicle = new Vehicle();
             String constructeur = request.getParameter("manufacturer");
             int  nb_places = Integer.parseInt(request.getParameter("seats"));
             vehicle.setConstructeur(constructeur);
             vehicle.setNb_places(nb_places);
-            vehicleService.create(vehicle);
+            if(Vehicle.hasEnoughPlace(vehicle)){
+                vehicleService.create(vehicle);
+                response.sendRedirect("/rentmanager/cars");
+            }
+            else{
+                String error_message = "La voiture doit avoir entre 2 et 9 places \n";
+                response.getWriter().write(error_message);
+            }
         } catch (ServiceException e) {
             e.printStackTrace();
         }
 
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/vehicles/create.jsp").forward(request, response);
     }
 }

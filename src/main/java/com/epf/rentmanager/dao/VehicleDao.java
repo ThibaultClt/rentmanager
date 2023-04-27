@@ -48,10 +48,10 @@ public class VehicleDao {
 		}
 	}
 
-	public long delete(Vehicle vehicle) throws DaoException {
+	public long delete(int id) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection()){
 			PreparedStatement ps = connection.prepareStatement(DELETE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, vehicle.getId()); // ATTENTION /!\ : l’indice commence par 1, contrairement aux tableaux
+			ps.setInt(1, id);
 
 			if (ps.executeUpdate() != 0) {
 				ps.close();

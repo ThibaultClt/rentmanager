@@ -52,12 +52,12 @@ public class ReservationDao {
 			throw new DaoException();
 		}
 	}
-	
-	public long delete(Reservation reservation) throws DaoException {
+
+	public long delete(int id) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection()){
 
 			PreparedStatement ps = connection.prepareStatement(DELETE_RESERVATION_QUERY, Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, reservation.getId()); // ATTENTION /!\ : l’indice commence par 1, contrairement aux tableaux
+			ps.setInt(1, id);
 
 			if (ps.executeUpdate() != 0) {
 				return 1;
@@ -71,7 +71,7 @@ public class ReservationDao {
 		}
 	}
 
-	
+
 	public List<Reservation> findResaByClientId(long clientId) throws DaoException {
 		List<Reservation> reservations = new ArrayList<Reservation>();
 		try{
@@ -95,7 +95,7 @@ public class ReservationDao {
 		}
 		return reservations;
 	}
-	
+
 	public List<Reservation> findResaByVehicleId(long vehicleId) throws DaoException {
 		List<Reservation> reservations = new ArrayList<Reservation>();
 		try{
@@ -162,4 +162,5 @@ public class ReservationDao {
 			throw new RuntimeException(e);
 		}
 	}
+
 }

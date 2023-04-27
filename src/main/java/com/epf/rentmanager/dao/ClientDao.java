@@ -19,7 +19,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ClientDao {
-	
+
 	private static ClientDao instance = null;
 
 	private ClientDao() {}
@@ -29,6 +29,8 @@ public class ClientDao {
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
 	private static final String COUNT_CLIENTS_QUERY = "SELECT COUNT(id) AS nb_client FROM Client;";
+	private static final String FIND_EMAIL_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE email=?;";
+
 
 
 	public long create(Client client) throws DaoException {
@@ -53,12 +55,12 @@ public class ClientDao {
 			throw new DaoException();
 		}
 	}
-	
-	public long delete(Client client) throws DaoException {
+
+	public long delete(int id) throws DaoException {
 		try (Connection connection = ConnectionManager.getConnection()){
 
 			PreparedStatement ps = connection.prepareStatement(DELETE_CLIENT_QUERY, Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, client.getId()); // ATTENTION /!\ : l’indice commence par 1, contrairement aux tableaux
+			ps.setInt(1, id);
 
 			if (ps.executeUpdate() != 0) {
 				return 1;
@@ -134,6 +136,27 @@ public class ClientDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException(e);
+		}
+	}
+
+	public Client findByEmail(String email) throws DaoException {
+		try{
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement pstatement = connection.prepareStatement(FIND_EMAIL_QUERY);
+			ResultSet rs = pstatement.executeQuery();
+
+			pstatement.setString(1,email);
+			if (rs.next()){
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				LocalDate date = rs.getDate("naissance").toLocalDate();
+				return new Client(nom,prenom,email,date);
+			}else{
+				return null;
+			}
+		} catch(SQLException e){
+			e.printStackTrace();
+			throw new DaoException();
 		}
 	}
 

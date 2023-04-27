@@ -2,6 +2,7 @@ package com.epf.rentmanager.servlet;
 
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.VehicleService;
@@ -21,6 +22,7 @@ public class UsersCreateServlet extends UserServlet {
     @Autowired
     ClientService clientService;
 
+
     @Override
     public void init() throws ServletException {
         super.init();
@@ -36,6 +38,7 @@ public class UsersCreateServlet extends UserServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
 // traitement du formulaire (appel à la méthode de sauvegarde)
+        boolean textVisibility = false;
         try {
             final Client client = new Client();
             String nom = request.getParameter("last_name");
@@ -46,11 +49,27 @@ public class UsersCreateServlet extends UserServlet {
             client.setPrenom(prenom);
             client.setEmail(email);
             client.setNaissance(naissance);
-            clientService.create(client);
+
+            if(Client.isLegal(client) == true && Client.isNameLongEnough(client)==true && Client.isMailValid(client,clientService)){
+                clientService.create(client);
+                response.sendRedirect("/rentmanager/users");
+            }
+            if(Client.isLegal(client)==false){
+                String error_message = "Le client doit être majeur \n";
+                response.getWriter().write(error_message);
+            }
+            if(Client.isNameLongEnough(client)==false){
+                String error_message = "Le nom et le prénom doivent faire au moins 3 lettres \n";
+                response.getWriter().write(error_message);
+            }
+            if(Client.isMailValid(client,clientService) == false){
+                String error_message = "L'adresse mail renseignée est déjà utilisée \n";
+                response.getWriter().write(error_message);
+            }
         } catch (ServiceException e) {
             e.printStackTrace();
         }
 //        response.sendRedirect("/rentmanager/src/main/webapp/WEB-INF/views/users/create.jsp");
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/create.jsp").forward(request, response);
+
     }
 }

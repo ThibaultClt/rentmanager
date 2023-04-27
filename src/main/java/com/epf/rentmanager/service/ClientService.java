@@ -32,6 +32,15 @@ public class ClientService {
 		}
 	}
 
+	public long delete(int id) throws ServiceException {
+		try {
+			return clientDao.delete(id);
+		} catch(DaoException e){
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
 	public Client findById(long id) throws ServiceException {
 
 		if(id<=0){
@@ -59,6 +68,15 @@ public class ClientService {
 		try{
 			return clientDao.count();
 		} catch (DaoException e){
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
+	public Client findByEmail(String email) throws ServiceException {
+		try {
+			return clientDao.findByEmail(email);
+		} catch(DaoException e){
 			e.printStackTrace();
 			throw new ServiceException();
 		}

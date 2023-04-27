@@ -51,7 +51,6 @@ public class RentsCreate extends ReservationServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
-// traitement du formulaire (appel à la méthode de sauvegarde)
         try {
             final Reservation reservation = new Reservation();
             int id_voiture = Integer.parseInt(request.getParameter("car"));
@@ -62,10 +61,21 @@ public class RentsCreate extends ReservationServlet {
             reservation.setClient_id(id_client);
             reservation.setDebut(début);
             reservation.setFin(fin);
-            reservationService.create(reservation);
+
+            if(Reservation.isBookedMore7Days(reservation) == false && Reservation.isDateOk(reservation, reservationService)){
+                reservationService.create(reservation);
+                response.sendRedirect("/rentmanager/rents");
+            }
+            if(Reservation.isBookedMore7Days(reservation)){
+                String error_message = "La réservation du véhicule ne peut pas excéder 7 jours \n";
+                response.getWriter().write(error_message);
+            }
+            if(Reservation.isDateOk(reservation, reservationService) == false){
+                String error_message = "Le véhicule choisi est déjà réservé pendant ces dates \n";
+                response.getWriter().write(error_message);
+            }
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        this.getServletContext().getRequestDispatcher("/WEB-INF/views/rents/create.jsp").forward(request, response);
-    }
+        }
 }

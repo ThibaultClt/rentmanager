@@ -37,6 +37,15 @@ public class ReservationService {
         }
     }
 
+    public long delete(int id) throws ServiceException {
+        try {
+            return reservationDao.delete(id);
+        } catch(DaoException e){
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+    }
+
     public List<Reservation> findResaByClientId(long clientId) throws ServiceException {
 
         if(clientId<=0){

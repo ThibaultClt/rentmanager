@@ -31,6 +31,15 @@ public class VehicleService {
 		}
 	}
 
+	public long delete(int id) throws ServiceException {
+		try {
+			return vehicleDao.delete(id);
+		} catch(DaoException e){
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
 	public Vehicle findById(long id) throws ServiceException {
 		if(id<=0){
 			throw new ServiceException("L'id est inférieur ou égal à 0");

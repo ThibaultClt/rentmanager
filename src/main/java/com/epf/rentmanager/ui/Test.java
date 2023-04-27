@@ -18,10 +18,8 @@ public class Test {
 
     public static void main(String[] args){
 
-        ApplicationContext context = new
-                AnnotationConfigApplicationContext(AppConfiguration.class);
-        ClientService clientService = context.getBean(ClientService.class);
-        VehicleService vehicleService = context.getBean(VehicleService.class);
+        Client legalUser = new Client("John", "Doe", "john.doe@ensta.fr", LocalDate.of(2010,01,01));
+        System.out.println(Client.isLegal(legalUser));
 
     }
 
