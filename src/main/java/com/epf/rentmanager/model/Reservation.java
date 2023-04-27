@@ -3,12 +3,13 @@ package com.epf.rentmanager.model;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class Reservation {
 
     private int id;
@@ -24,6 +25,15 @@ public class Reservation {
         this.vehicle_id = vehicle_id;
         this.debut = debut;
         this.fin = fin;
+    }
+
+    public Reservation(int id, int client_id, int vehicle_id, LocalDate debut, LocalDate fin, Vehicle vehicle) {
+        this.id = id;
+        this.client_id = client_id;
+        this.vehicle_id = vehicle_id;
+        this.debut = debut;
+        this.fin = fin;
+        this.vehicle = vehicle;
     }
 
     public Reservation(int id, int client_id, int vehicle_id, LocalDate debut, LocalDate fin) {
@@ -66,13 +76,6 @@ public class Reservation {
         }
         return dateOK;
     }
-
-//    public static boolean isDateOver30(Reservation reservation, ReservationService reservationService1) throws ServiceException {
-//        List<Reservation> reservations = reservationService1.findResaByVehicleId(reservation.getVehicle_id());
-//        LocalDate dateDebut = reservation.getDebut();
-//        LocalDate dateFin = reservation.getFin();
-//
-//    }
 
     public Vehicle getVehicle() {
         return vehicle;
@@ -130,5 +133,16 @@ public class Reservation {
         this.fin = fin;
     }
 
-
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", client_id=" + client_id +
+                ", vehicle_id=" + vehicle_id +
+                ", debut=" + debut +
+                ", fin=" + fin +
+                ", vehicle=" + vehicle +
+                ", client=" + client +
+                '}';
+    }
 }

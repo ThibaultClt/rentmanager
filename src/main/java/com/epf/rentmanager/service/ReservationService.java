@@ -47,11 +47,9 @@ public class ReservationService {
     }
 
     public List<Reservation> findResaByClientId(long clientId) throws ServiceException {
-
         if(clientId<=0){
             throw new ServiceException("L'id est inférieur ou égal à 0");
         }
-
         try {
             return reservationDao.findResaByClientId(clientId);
         } catch(DaoException e){
@@ -61,11 +59,9 @@ public class ReservationService {
     }
 
     public List<Reservation> findResaByVehicleId(long vehicleId) throws ServiceException {
-
         if(vehicleId<=0){
             throw new ServiceException("L'id est inférieur ou égal à 0");
         }
-
         try {
             return reservationDao.findResaByVehicleId(vehicleId);
         } catch(DaoException e){

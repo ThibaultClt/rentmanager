@@ -10,6 +10,7 @@ import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
 
 import com.epf.rentmanager.dao.ClientDao;
+import com.epf.rentmanager.model.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,8 @@ public class ClientService {
 
 	@Autowired
 	private ClientDao clientDao;
+	@Autowired
+	private ReservationService reservationService;
 
 	private ClientService(ClientDao clientDao){
 		this.clientDao = clientDao;
@@ -34,19 +37,21 @@ public class ClientService {
 
 	public long delete(int id) throws ServiceException {
 		try {
+			List<Reservation> reservationsClient = reservationService.findResaByClientId(id);
+			for(Reservation reservation : reservationsClient) {
+				reservationService.delete(reservation.getId());
+			}
 			return clientDao.delete(id);
-		} catch(DaoException e){
+		} catch (DaoException e) {
 			e.printStackTrace();
 			throw new ServiceException();
 		}
 	}
 
 	public Client findById(long id) throws ServiceException {
-
 		if(id<=0){
 			throw new ServiceException("L'id est inférieur ou égal à 0");
 		}
-
 		try {
 			return clientDao.findById(id);
 		} catch(DaoException e){

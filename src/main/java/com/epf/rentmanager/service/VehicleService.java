@@ -5,6 +5,7 @@ import java.util.List;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
+import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.dao.ClientDao;
 import com.epf.rentmanager.dao.VehicleDao;
@@ -16,6 +17,8 @@ public class VehicleService {
 
 	@Autowired
 	VehicleDao vehicleDao;
+	@Autowired
+	private ReservationService reservationService;
 
 	private VehicleService() {
 		this.vehicleDao = vehicleDao;
@@ -33,6 +36,10 @@ public class VehicleService {
 
 	public long delete(int id) throws ServiceException {
 		try {
+			List<Reservation> reservationsVehicle = reservationService.findResaByClientId(id);
+			for(Reservation reservation : reservationsVehicle) {
+				reservationService.delete(reservation.getId());
+			}
 			return vehicleDao.delete(id);
 		} catch(DaoException e){
 			e.printStackTrace();
@@ -41,10 +48,9 @@ public class VehicleService {
 	}
 
 	public Vehicle findById(long id) throws ServiceException {
-		if(id<=0){
+		if (id <= 0) {
 			throw new ServiceException("L'id est inférieur ou égal à 0");
 		}
-
 		try {
 			return vehicleDao.findById(id);
 		} catch(DaoException e){
@@ -66,6 +72,18 @@ public class VehicleService {
 		try{
 			return this.vehicleDao.count();
 		} catch (DaoException e){
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
+	public List<Vehicle> findByClientId(long id) throws ServiceException {
+		if (id <= 0) {
+			throw new ServiceException("L'id est inférieur ou égal à 0");
+		}
+		try {
+			return vehicleDao.findByClientId(id);
+		} catch(DaoException e){
 			e.printStackTrace();
 			throw new ServiceException();
 		}

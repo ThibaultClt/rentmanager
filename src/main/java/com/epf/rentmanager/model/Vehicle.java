@@ -1,7 +1,9 @@
 package com.epf.rentmanager.model;
 
-import java.time.Period;
+import org.springframework.stereotype.Service;
 
+import java.time.Period;
+@Service
 public class Vehicle {
 
     private int id;

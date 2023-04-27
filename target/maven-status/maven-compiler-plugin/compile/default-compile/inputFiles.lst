@@ -6,6 +6,7 @@ C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\model\Vehicle.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\VehicleCreateServlet.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\UsersCreateServlet.java
+C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\UserDetailsServlet.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\dao\ReservationDao.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\persistence\ConnectionManager.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\model\AppConfiguration.java
@@ -13,7 +14,6 @@ C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\UserServlet.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\ui\Test.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\persistence\FillDatabase.java
-C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\DetailsUser.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\servlet\UserDeleteServlet.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\model\Client.java
 C:\Users\colle\Documents\Cours_4A\Java\Seance4_230217\rentmanager\src\main\java\com\epf\rentmanager\utils\IOUtils.java

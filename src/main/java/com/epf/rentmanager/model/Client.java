@@ -3,13 +3,13 @@ package com.epf.rentmanager.model;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.beans.PersistenceDelegate;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-
-
+@Service
 public class Client {
 
     private int id;
