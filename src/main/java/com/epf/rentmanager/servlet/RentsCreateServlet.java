@@ -56,17 +56,20 @@ public class RentsCreateServlet extends ReservationListServlet {
             reservation.setClient_id(id_client);
             reservation.setDebut(début);
             reservation.setFin(fin);
-
-            if(Reservation.isBookedMore7Days(reservation) == false && Reservation.isDateOk(reservation, reservationService)){
+            if (Reservation.isBookedMore7Days(reservation) == false && Reservation.isDateOk(reservation, reservationService) && Reservation.isNotBooked30Days(reservation, reservationService)){
                 reservationService.create(reservation);
                 response.sendRedirect("/rentmanager/rents");
             }
-            if(Reservation.isBookedMore7Days(reservation)){
+            if (Reservation.isBookedMore7Days(reservation)){
                 String error_message = "La réservation du véhicule ne peut pas excéder 7 jours \n";
                 response.getWriter().write(error_message);
             }
-            if(Reservation.isDateOk(reservation, reservationService) == false){
+            if (Reservation.isDateOk(reservation, reservationService) == false){
                 String error_message = "Le véhicule choisi est déjà réservé pendant ces dates \n";
+                response.getWriter().write(error_message);
+            }
+            if (Reservation.isNotBooked30Days(reservation,reservationService) == false){
+                String error_message = "Le véhicule choisi ne peut être réservé plus de 30 jours de suite \n";
                 response.getWriter().write(error_message);
             }
         } catch (ServiceException e) {

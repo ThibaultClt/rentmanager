@@ -14,9 +14,6 @@ import java.io.IOException;
 @WebServlet("/rents")
 public class ReservationListServlet extends HomeServlet {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
     @Autowired

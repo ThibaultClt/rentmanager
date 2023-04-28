@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 @Service
 public class Reservation {
@@ -52,8 +54,8 @@ public class Reservation {
         return period.getDays() > 7;
     }
 
-    public static boolean isDateOk(Reservation reservation, ReservationService reservationService1) throws ServiceException {
-        List<Reservation> reservations = reservationService1.findResaByVehicleId(reservation.getVehicle_id());
+    public static boolean isDateOk(Reservation reservation, ReservationService reservationService) throws ServiceException {
+        List<Reservation> reservations = reservationService.findResaByVehicleId(reservation.getVehicle_id());
         LocalDate dateDebut = reservation.getDebut();
         LocalDate dateFin = reservation.getFin();
         boolean dateOK = true;
@@ -78,6 +80,36 @@ public class Reservation {
 
         }
         return dateOK;
+    }
+
+    public static boolean isNotBooked30Days(Reservation reservation, ReservationService reservationService) throws ServiceException{
+        List<Reservation> reservations = reservationService.findResaByVehicleId(reservation.vehicle_id);
+        reservations.add(reservation);
+        Collections.sort(reservations, Comparator.comparing(Reservation::getDebut));
+        LocalDate firstDate = reservations.get(0).debut;
+        boolean isAvailableFor30Days = true;
+        int cpt = 0;
+        for (int i = 0; i < 31; i++) {
+            LocalDate dateToCheck = firstDate.plusDays(i);
+            boolean isReserved = false;
+            for (Reservation listeReservation : reservations) {
+                if ((listeReservation.getDebut().isBefore(dateToCheck) || listeReservation.getDebut().isEqual(dateToCheck))
+                        && (listeReservation.getFin().isAfter(dateToCheck) || listeReservation.getFin().isEqual(dateToCheck))) {
+                    isReserved = true;
+                    break;
+                }
+            }
+            if (!isReserved) {
+                cpt = 0;
+            } else {
+                cpt++;
+                if (cpt > 30) {
+                    isAvailableFor30Days = false;
+                    break;
+                }
+            }
+        }
+        return isAvailableFor30Days;
     }
 
     public Vehicle getVehicle() {

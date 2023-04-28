@@ -70,13 +70,13 @@ public class ClientDao {
 		}
 	}
 
-	public long delete(int id_client) throws DaoException {
+	public long delete(int id) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
 			 	PreparedStatement ps =
 					 connection.prepareStatement(DELETE_CLIENT_QUERY)
 			) {
-			ps.setInt(1, id_client);
+			ps.setInt(1, id);
 			return ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new DaoException();
@@ -107,7 +107,7 @@ public class ClientDao {
 		try (
 				Connection connection = ConnectionManager.getConnection();
 				Statement statement = connection.createStatement();
-				ResultSet rs = statement.executeQuery(FIND_CLIENTS_QUERY);
+				ResultSet rs = statement.executeQuery(FIND_CLIENTS_QUERY)
 			) {
 			while (rs.next()){
 				int id = rs.getInt("id");
@@ -124,27 +124,10 @@ public class ClientDao {
 		return clients;
 	}
 
-	public long count() throws DaoException{
-		int nb_client = 1;
-		try (
-				Connection connection = ConnectionManager.getConnection();
-				Statement statement = connection.createStatement();
-				ResultSet rs = statement.executeQuery(COUNT_CLIENTS_QUERY)
-			) {
-			while (rs.next()){
-				nb_client = rs.getInt(nb_client);
-			}
-			return nb_client;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
-
 	public Client findByEmail(String email) throws DaoException {
 		try(
 				Connection connection = ConnectionManager.getConnection();
-				PreparedStatement pstatement = connection.prepareStatement(FIND_EMAIL_QUERY);
+				PreparedStatement pstatement = connection.prepareStatement(FIND_EMAIL_QUERY)
 			) {
 			pstatement.setString(1,email);
 			ResultSet rs = pstatement.executeQuery();
@@ -157,13 +140,28 @@ public class ClientDao {
 				pstatement.close();
 				return new Client(id,nom,prenom,email,date);
 			}else{
-				connection.close();
-				pstatement.close();
 				return null;
 			}
 		} catch(SQLException e){
 			e.printStackTrace();
 			throw new DaoException();
+		}
+	}
+
+	public long count() throws DaoException{
+		int nb_client = 1;
+		try (
+				Connection connection = ConnectionManager.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet rs = statement.executeQuery(COUNT_CLIENTS_QUERY)
+		) {
+			while (rs.next()){
+				nb_client = rs.getInt(nb_client);
+			}
+			return nb_client;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 

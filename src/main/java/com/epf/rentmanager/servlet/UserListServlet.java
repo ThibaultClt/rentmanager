@@ -14,9 +14,6 @@ import java.io.IOException;
 @WebServlet("/users")
 public class UserListServlet extends HomeServlet {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     @Autowired
     ClientService clientService;

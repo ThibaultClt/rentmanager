@@ -59,13 +59,15 @@ public class VehicleService {
 	public Vehicle findById(long id) throws ServiceException {
 		if (id <= 0) {
 			throw new ServiceException("L'id est inférieur ou égal à 0");
+		} else {
+			try {
+				return vehicleDao.findById(id);
+			} catch(DaoException e){
+				e.printStackTrace();
+				throw new ServiceException();
+			}
 		}
-		try {
-			return vehicleDao.findById(id);
-		} catch(DaoException e){
-			e.printStackTrace();
-			throw new ServiceException();
-		}
+
 	}
 
 	public List<Vehicle> findAll() throws ServiceException {
@@ -77,22 +79,23 @@ public class VehicleService {
 		}
 	}
 
+	public List<Vehicle> findByClientId(long id) throws ServiceException {
+		if (id <= 0) {
+			throw new ServiceException("L'id est inférieur ou égal à 0");
+		} else {
+			try {
+				return vehicleDao.findByClientId(id);
+			} catch(DaoException e){
+				e.printStackTrace();
+				throw new ServiceException();
+			}
+		}
+
+	}
 	public long count() throws ServiceException {
 		try{
 			return this.vehicleDao.count();
 		} catch (DaoException e){
-			e.printStackTrace();
-			throw new ServiceException();
-		}
-	}
-
-	public List<Vehicle> findByClientId(long id) throws ServiceException {
-		if (id <= 0) {
-			throw new ServiceException("L'id est inférieur ou égal à 0");
-		}
-		try {
-			return vehicleDao.findByClientId(id);
-		} catch(DaoException e){
 			e.printStackTrace();
 			throw new ServiceException();
 		}

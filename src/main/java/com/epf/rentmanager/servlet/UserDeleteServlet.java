@@ -15,7 +15,6 @@ import java.io.IOException;
 @WebServlet("/users/delete")
 public class UserDeleteServlet extends HttpServlet {
 
-
     @Autowired
     private ClientService clientService;
     @Override

@@ -64,7 +64,6 @@ public class UserCreateServlet extends UserListServlet {
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-//        response.sendRedirect("/rentmanager/src/main/webapp/WEB-INF/views/users/create.jsp");
 
     }
 }

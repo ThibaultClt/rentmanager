@@ -32,7 +32,7 @@ public class VehicleDao {
 		try (
 				Connection connection = ConnectionManager.getConnection();
 				PreparedStatement ps =
-					connection.prepareStatement(CREATE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS);
+					connection.prepareStatement(CREATE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS)
 			) {
 			ps.setString(1, vehicle.getConstructeur());
 			ps.setInt(2, vehicle.getNb_places());
@@ -53,7 +53,7 @@ public class VehicleDao {
 				Connection connection = ConnectionManager.getConnection();
 				PreparedStatement ps =
 						connection.prepareStatement(UPDATE_VEHICLE_QUERY, Statement.RETURN_GENERATED_KEYS)
-		) {
+			) {
 			ps.setString(1, vehicle.getConstructeur());
 			ps.setInt(2, vehicle.getNb_places());
 			ps.setInt(3, vehicle.getId());
@@ -88,7 +88,6 @@ public class VehicleDao {
 			String constructeur = rs.getString("constructeur");
 			int nbPlaces = rs.getInt("nb_places");
 			return new Vehicle((int) id,constructeur,nbPlaces);
-
 		} catch(SQLException e){
 			e.printStackTrace();
 			throw new DaoException();
@@ -107,7 +106,6 @@ public class VehicleDao {
 				int id = rs.getInt("id");
 				String constructeur = rs.getString("constructeur");
 				int nbPlaces = rs.getInt("nb_places");
-
 				vehicles.add(new Vehicle(id,constructeur,nbPlaces));
 			}
 		} catch (SQLException e) {

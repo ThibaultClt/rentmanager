@@ -27,7 +27,6 @@ public class ReservationService {
         this.reservationDao = reservationDao;
     }
 
-
     public long create(Reservation reservation) throws ServiceException {
         try {
             return reservationDao.create(reservation);
@@ -58,48 +57,52 @@ public class ReservationService {
     public Reservation findById(long id) throws ServiceException {
         if (id <= 0) {
             throw new ServiceException("L'id est inférieur ou égal à 0");
-        }
-        try {
-            return reservationDao.findById(id);
-        } catch(DaoException e){
-            e.printStackTrace();
-            throw new ServiceException();
+        } else {
+            try {
+                return reservationDao.findById(id);
+            } catch(DaoException e){
+                e.printStackTrace();
+                throw new ServiceException();
+            }
         }
     }
 
     public List<Reservation> findResaByClientId(long clientId) throws ServiceException {
         if(clientId<=0){
             throw new ServiceException("L'id est inférieur ou égal à 0");
-        }
-        try {
-            return reservationDao.findResaByClientId(clientId);
-        } catch(DaoException e){
-            e.printStackTrace();
-            throw new ServiceException();
+        } else {
+            try {
+                return reservationDao.findResaByClientId(clientId);
+            } catch(DaoException e){
+                e.printStackTrace();
+                throw new ServiceException();
+            }
         }
     }
 
     public List<Reservation> findResaByVehicleId(long vehicleId) throws ServiceException {
         if(vehicleId<=0){
             throw new ServiceException("L'id est inférieur ou égal à 0");
+        } else {
+            try {
+                return reservationDao.findResaByVehicleId(vehicleId);
+            } catch(DaoException e){
+                e.printStackTrace();
+                throw new ServiceException();
+            }
         }
-        try {
-            return reservationDao.findResaByVehicleId(vehicleId);
-        } catch(DaoException e){
-            e.printStackTrace();
-            throw new ServiceException();
-        }
+
     }
 
     public List<Reservation> findAll() throws ServiceException {
         List<Reservation> reservations = new ArrayList<Reservation>();
         try {
             reservations = reservationDao.findAll();
-            for(int i =0; i<reservations.size(); i++){
-                Client client = clientService.findById(reservations.get(i).getClient_id());
-                reservations.get(i).setClient(client);
-                Vehicle vehicle = vehicleService.findById(reservations.get(i).getVehicle_id());
-                reservations.get(i).setVehicle(vehicle);
+            for(Reservation reservation : reservations){
+                Client client = clientService.findById(reservation.getClient_id());
+                reservation.setClient(client);
+                Vehicle vehicle = vehicleService.findById(reservation.getVehicle_id());
+                reservation.setVehicle(vehicle);
             }
             return reservations;
         } catch(DaoException e){
