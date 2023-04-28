@@ -23,8 +23,13 @@ public class VehicleService {
 	private VehicleService() {
 		this.vehicleDao = vehicleDao;
 	}
-	
-	
+
+	/**
+	 * Création d'un véhicule
+	 * @param vehicle le véhicule créé
+	 * @return l'identifiant du véhicule
+	 * @throws ServiceException
+	 */
 	public long create(Vehicle vehicle) throws ServiceException {
 		try {
 			return vehicleDao.create(vehicle);
@@ -34,6 +39,12 @@ public class VehicleService {
 		}
 	}
 
+	/**
+	 * Modification d'un vehicule
+	 * @param vehicle l'identifiant du vehicule modifié
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws ServiceException
+	 */
 	public long edit(Vehicle vehicle) throws ServiceException {
 		try {
 			return vehicleDao.edit(vehicle);
@@ -43,6 +54,12 @@ public class VehicleService {
 		}
 	}
 
+	/**
+	 * Suppression d'un vehicule
+	 * @param id l'identifiant du vehicule supprimé
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws ServiceException
+	 */
 	public long delete(int id) throws ServiceException {
 		try {
 			List<Reservation> reservationsVehicle = reservationService.findResaByClientId(id);
@@ -56,6 +73,12 @@ public class VehicleService {
 		}
 	}
 
+	/**
+	 * Recherche d'un vehicule avec son identifiant
+	 * @param id l'identifiant du vehicule recherché
+	 * @return le vehicule recherché
+	 * @throws ServiceException
+	 */
 	public Vehicle findById(long id) throws ServiceException {
 		if (id <= 0) {
 			throw new ServiceException("L'id est inférieur ou égal à 0");
@@ -70,6 +93,11 @@ public class VehicleService {
 
 	}
 
+	/**
+	 * Recherche de tous les vehicules
+	 * @return une liste de tous les vehicules
+	 * @throws ServiceException
+	 */
 	public List<Vehicle> findAll() throws ServiceException {
 		try {
 			return vehicleDao.findAll();
@@ -79,6 +107,12 @@ public class VehicleService {
 		}
 	}
 
+	/**
+	 * Recherche des vehicules réservés par un client
+	 * @param id l'identifiant du client qui a réservé la voiture
+	 * @return une liste des vehicules recherchés
+	 * @throws ServiceException
+	 */
 	public List<Vehicle> findByClientId(long id) throws ServiceException {
 		if (id <= 0) {
 			throw new ServiceException("L'id est inférieur ou égal à 0");
@@ -92,6 +126,12 @@ public class VehicleService {
 		}
 
 	}
+
+	/**
+	 * Compte le nombre de vehicules
+	 * @return le nombre de vehicules
+	 * @throws ServiceException
+	 */
 	public long count() throws ServiceException {
 		try{
 			return this.vehicleDao.count();
@@ -101,6 +141,11 @@ public class VehicleService {
 		}
 	}
 
+	/**
+	 * Compte le nombre de vehicules réservés par un client
+	 * @return le nombre de vehicules
+	 * @throws ServiceException
+	 */
 	public long countVehiclesClient(int id) throws ServiceException {
 		try{
 			return this.vehicleDao.countVehiclesClient(id);

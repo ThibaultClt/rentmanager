@@ -5,6 +5,7 @@ import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
+import jdk.vm.ci.meta.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 @WebServlet("/rents/create")
-public class RentsCreateServlet extends ReservationListServlet {
+public class RentsCreateServlet extends RentsListServlet {
     private static final long serialVersionUID = 1L;
     @Autowired
     ClientService clientService;
@@ -52,6 +53,11 @@ public class RentsCreateServlet extends ReservationListServlet {
             int id_client = Integer.parseInt(request.getParameter("client"));
             LocalDate début = LocalDate.parse(request.getParameter("begin"));
             LocalDate fin = LocalDate.parse(request.getParameter("end"));
+            if (début.isAfter(fin)){
+                LocalDate date = début;
+                début = fin;
+                fin = date;
+            }
             reservation.setVehicle_id(id_voiture);
             reservation.setClient_id(id_client);
             reservation.setDebut(début);

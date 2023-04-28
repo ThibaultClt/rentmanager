@@ -36,16 +36,32 @@ public class Client {
     public Client() {
     }
 
+    /**
+     * Vérification de l'âge du client
+     * @param client le client que l'on veut créer ou modifier
+     * @return un boolean s'il est majeur ou non
+     */
     public static boolean isLegal(Client client) {
         Period period = Period.between(client.getNaissance(),LocalDate.now());
         System.out.println(period.getYears());
         return period.getYears() >= 18;
     }
 
+    /**
+     * Vérification de la validité du nom et du prénom du client
+     * @param client le client que l'on veut créer ou modifier
+     * @return un boolean si le nom et le prénom font 3 caractères ou plus
+     */
     public static boolean isNameLongEnough(Client client) {
         return client.getNom().length() >= 3 && client.getPrenom().length() >= 3;
     }
 
+    /**
+     * Vérification de la validité du mail du client
+     * @param client le client que l'on veut créer ou modifier
+     * @param clientService le Service que l'on utilise pour comparer à la base de données
+     * @return un boolean si le mail est déjà pris ou non
+     */
     public static boolean isMailValid(Client client, ClientService clientService){
         boolean mailisvalid = true;
         try {

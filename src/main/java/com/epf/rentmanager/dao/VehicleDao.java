@@ -28,6 +28,12 @@ public class VehicleDao {
 	private static final String FIND_VEHICLES_CLIENT_QUERY = "SELECT * FROM Vehicle INNER JOIN Reservation ON Reservation.vehicle_id=Vehicle.id WHERE Reservation.client_id=?;";
 	private static final String COUNT_VEHICLES_CLIENT_QUERY = "SELECT COUNT(DISTINCT Vehicle.id) FROM Vehicle INNER JOIN Reservation ON Reservation.vehicle_id=Vehicle.id WHERE Reservation.client_id=?";
 
+	/**
+	 * Création d'un véhicule
+	 * @param vehicle le véhicule créé
+	 * @return l'identifiant du véhicule
+	 * @throws DaoException
+	 */
 	public long create(Vehicle vehicle) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -48,6 +54,12 @@ public class VehicleDao {
 		}
 	}
 
+	/**
+	 * Modification d'un vehicule
+	 * @param vehicle l'identifiant du vehicule modifié
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws DaoException
+	 */
 	public long edit(Vehicle vehicle) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -64,6 +76,12 @@ public class VehicleDao {
 		}
 	}
 
+	/**
+	 * Suppression d'un vehicule
+	 * @param id l'identifiant du vehicule supprimé
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws DaoException
+	 */
 	public long delete(int id) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -77,6 +95,12 @@ public class VehicleDao {
 		}
 	}
 
+	/**
+	 * Recherche d'un vehicule avec son identifiant
+	 * @param id l'identifiant du vehicule recherché
+	 * @return le vehicule recherché
+	 * @throws DaoException
+	 */
 	public Vehicle findById(long id) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -94,6 +118,11 @@ public class VehicleDao {
 		}
 	}
 
+	/**
+	 * Recherche de tous les vehicules
+	 * @return une liste de tous les vehicules
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findAll() throws DaoException {
 
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
@@ -115,6 +144,12 @@ public class VehicleDao {
 		return vehicles;
 	}
 
+	/**
+	 * Recherche des vehicules réservés par un client
+	 * @param id l'identifiant du client qui a réservé la voiture
+	 * @return une liste des vehicules recherchés
+	 * @throws DaoException
+	 */
 	public List<Vehicle> findByClientId(long id) throws DaoException {
 		List<Vehicle> vehicles = new ArrayList<Vehicle>();
 		try (
@@ -136,6 +171,11 @@ public class VehicleDao {
 		return vehicles;
 	}
 
+	/**
+	 * Compte le nombre de vehicules
+	 * @return le nombre de vehicules
+	 * @throws DaoException
+	 */
 	public long count() throws DaoException{
 		int nb_vehicle = 1;
 		try (
@@ -153,6 +193,11 @@ public class VehicleDao {
 		}
 	}
 
+	/**
+	 * Compte le nombre de vehicules réservés par un client
+	 * @return le nombre de vehicules
+	 * @throws DaoException
+	 */
 	public long countVehiclesClient(int id) throws DaoException{
 		int nb_vehicle = 1;
 		try (

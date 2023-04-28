@@ -30,6 +30,12 @@ public class ClientDao {
 	private static final String COUNT_CLIENTS_QUERY = "SELECT COUNT(id) AS nb_client FROM Client;";
 	private static final String FIND_EMAIL_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client WHERE email=?;";
 
+	/**
+	 * Création d'un client
+	 * @param client le client créé
+	 * @return l'identifiant du client
+	 * @throws DaoException
+	 */
 	public long create(Client client) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -52,6 +58,12 @@ public class ClientDao {
 		}
 	}
 
+	/**
+	 * Modification d'un client
+	 * @param client l'identifiant du client modifié
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws DaoException
+	 */
 	public long edit(Client client) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -70,6 +82,12 @@ public class ClientDao {
 		}
 	}
 
+	/**
+	 * Suppression d'un client
+	 * @param id l'identifiant du client supprimé
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws DaoException
+	 */
 	public long delete(int id) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -83,6 +101,12 @@ public class ClientDao {
 		}
 	}
 
+	/**
+	 * Recherche d'un client avec son identifiant
+	 * @param id l'identifiant du client recherché
+	 * @return le client recherché
+	 * @throws DaoException
+	 */
 	public Client findById(long id) throws DaoException {
 		try(
 				Connection connection = ConnectionManager.getConnection();
@@ -102,6 +126,41 @@ public class ClientDao {
 		}
 	}
 
+	/**
+	 * Recherche d'un client avec son email
+	 * @param email
+	 * @return le client recherché
+	 * @throws DaoException
+	 */
+	public Client findByEmail(String email) throws DaoException {
+		try(
+				Connection connection = ConnectionManager.getConnection();
+				PreparedStatement pstatement = connection.prepareStatement(FIND_EMAIL_QUERY)
+		) {
+			pstatement.setString(1,email);
+			ResultSet rs = pstatement.executeQuery();
+			if (rs.next()){
+				int id = rs.getInt("id");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				LocalDate date = rs.getDate("naissance").toLocalDate();
+				connection.close();
+				pstatement.close();
+				return new Client(id,nom,prenom,email,date);
+			}else{
+				return null;
+			}
+		} catch(SQLException e){
+			e.printStackTrace();
+			throw new DaoException();
+		}
+	}
+
+	/**
+	 * Recherche de tous les clients
+	 * @return une liste de tous les clients
+	 * @throws DaoException
+	 */
 	public List<Client> findAll() throws DaoException {
 		List<Client> clients = new ArrayList<Client>();
 		try (
@@ -124,30 +183,11 @@ public class ClientDao {
 		return clients;
 	}
 
-	public Client findByEmail(String email) throws DaoException {
-		try(
-				Connection connection = ConnectionManager.getConnection();
-				PreparedStatement pstatement = connection.prepareStatement(FIND_EMAIL_QUERY)
-			) {
-			pstatement.setString(1,email);
-			ResultSet rs = pstatement.executeQuery();
-			if (rs.next()){
-				int id = rs.getInt("id");
-				String nom = rs.getString("nom");
-				String prenom = rs.getString("prenom");
-				LocalDate date = rs.getDate("naissance").toLocalDate();
-				connection.close();
-				pstatement.close();
-				return new Client(id,nom,prenom,email,date);
-			}else{
-				return null;
-			}
-		} catch(SQLException e){
-			e.printStackTrace();
-			throw new DaoException();
-		}
-	}
-
+	/**
+	 * Compte le nombre de clients
+	 * @return le nombre de clients
+	 * @throws DaoException
+	 */
 	public long count() throws DaoException{
 		int nb_client = 1;
 		try (

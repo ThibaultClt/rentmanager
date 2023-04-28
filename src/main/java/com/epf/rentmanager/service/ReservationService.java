@@ -27,6 +27,12 @@ public class ReservationService {
         this.reservationDao = reservationDao;
     }
 
+    /**
+     * Création d'une réservation
+     * @param reservation la réservation créée
+     * @return l'identifiant de la réservation
+     * @throws ServiceException
+     */
     public long create(Reservation reservation) throws ServiceException {
         try {
             return reservationDao.create(reservation);
@@ -36,6 +42,12 @@ public class ReservationService {
         }
     }
 
+    /**
+     * Modification d'une réservation
+     * @param reservation l'identifiant de la réservation modifiée
+     * @return le nombre de lignes mises à jour dans la table
+     * @throws ServiceException
+     */
     public long edit(Reservation reservation) throws ServiceException {
         try {
             return reservationDao.edit(reservation);
@@ -45,6 +57,12 @@ public class ReservationService {
         }
     }
 
+    /**
+     * Suppression d'une réservation
+     * @param id l'identifiant de la réservation supprimée
+     * @return le nombre de lignes mises à jour dans la table
+     * @throws ServiceException
+     */
     public long delete(int id) throws ServiceException {
         try {
             return reservationDao.delete(id);
@@ -54,6 +72,12 @@ public class ReservationService {
         }
     }
 
+    /**
+     * Recherche d'une réservation avec son identifiant
+     * @param id l'identifiant de la réservation recherchée
+     * @return la réservation recherchée
+     * @throws ServiceException
+     */
     public Reservation findById(long id) throws ServiceException {
         if (id <= 0) {
             throw new ServiceException("L'id est inférieur ou égal à 0");
@@ -67,6 +91,12 @@ public class ReservationService {
         }
     }
 
+    /**
+     * Recherche des réservations d'un client avec son identifiant
+     * @param clientId l'identifiant du client de la réservation recherchée
+     * @return la liste des réservations du client
+     * @throws ServiceException
+     */
     public List<Reservation> findResaByClientId(long clientId) throws ServiceException {
         if(clientId<=0){
             throw new ServiceException("L'id est inférieur ou égal à 0");
@@ -80,6 +110,12 @@ public class ReservationService {
         }
     }
 
+    /**
+     * Recherche des réservations d'une voiture avec son identifiant
+     * @param vehicleId l'identifiant de la voiture de la réservation recherchée
+     * @return la liste des réservations de la voiture
+     * @throws ServiceException
+     */
     public List<Reservation> findResaByVehicleId(long vehicleId) throws ServiceException {
         if(vehicleId<=0){
             throw new ServiceException("L'id est inférieur ou égal à 0");
@@ -94,6 +130,11 @@ public class ReservationService {
 
     }
 
+    /**
+     * Recherche de toutes les réservations
+     * @return une liste de toutes les réservations
+     * @throws ServiceException
+     */
     public List<Reservation> findAll() throws ServiceException {
         List<Reservation> reservations = new ArrayList<Reservation>();
         try {
@@ -111,6 +152,11 @@ public class ReservationService {
         }
     }
 
+    /**
+     * Compte le nombre de réservations
+     * @return le nombre de réservations
+     * @throws ServiceException
+     */
     public long count() throws ServiceException {
         try{
             return reservationDao.count();

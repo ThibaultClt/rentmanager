@@ -38,7 +38,12 @@ public class ReservationDao {
 	private static final String FIND_RESERVATION_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation WHERE id=?;";
 	private static final String COUNT_RESERVATIONS_QUERY = "SELECT COUNT(id) AS nb_reservation FROM Reservation;";
 
-
+	/**
+	 * Création d'une réservation
+	 * @param reservation la réservation créée
+	 * @return l'identifiant de la réservation
+	 * @throws DaoException
+	 */
 	public long create(Reservation reservation) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -61,6 +66,12 @@ public class ReservationDao {
 		}
 	}
 
+	/**
+	 * Modification d'une réservation
+	 * @param reservation l'identifiant de la réservation modifiée
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws DaoException
+	 */
 	public long edit(Reservation reservation) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -79,6 +90,12 @@ public class ReservationDao {
 		}
 	}
 
+	/**
+	 * Suppression d'une réservation
+	 * @param id l'identifiant de la réservation supprimée
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws DaoException
+	 */
 	public long delete(int id) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -92,6 +109,12 @@ public class ReservationDao {
 		}
 	}
 
+	/**
+	 * Recherche d'une réservation avec son identifiant
+	 * @param id l'identifiant de la réservation recherchée
+	 * @return la réservation recherchée
+	 * @throws DaoException
+	 */
 	public Reservation findById(long id) throws DaoException {
 		try (
 				Connection connection = ConnectionManager.getConnection();
@@ -111,6 +134,12 @@ public class ReservationDao {
 		}
 	}
 
+	/**
+	 * Recherche des réservations d'un client avec son identifiant
+	 * @param clientId l'identifiant du client de la réservation recherchée
+	 * @return la liste des réservations du client
+	 * @throws DaoException
+	 */
 	public List<Reservation> findResaByClientId(long clientId) throws DaoException {
 		List<Reservation> reservations = new ArrayList<Reservation>();
 		try(
@@ -134,6 +163,12 @@ public class ReservationDao {
 		return reservations;
 	}
 
+	/**
+	 * Recherche des réservations d'une voiture avec son identifiant
+	 * @param vehicleId l'identifiant de la voiture de la réservation recherchée
+	 * @return la liste des réservations de la voiture
+	 * @throws DaoException
+	 */
 	public List<Reservation> findResaByVehicleId(long vehicleId) throws DaoException {
 		List<Reservation> reservations = new ArrayList<Reservation>();
 		try(
@@ -156,6 +191,11 @@ public class ReservationDao {
 		return reservations;
 	}
 
+	/**
+	 * Recherche de toutes les réservations
+	 * @return une liste de toutes les réservations
+	 * @throws DaoException
+	 */
 	public List<Reservation> findAll() throws DaoException {
 		List<Reservation> reservations = new ArrayList<Reservation>();
 		try(
@@ -178,6 +218,11 @@ public class ReservationDao {
 		return reservations;
 	}
 
+	/**
+	 * Compte le nombre de réservations
+	 * @return le nombre de réservations
+	 * @throws DaoException
+	 */
 	public long count() throws DaoException{
 		int nb_reservation = 1;
 		try (

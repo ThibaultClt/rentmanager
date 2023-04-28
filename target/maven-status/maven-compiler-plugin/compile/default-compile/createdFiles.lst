@@ -1,5 +1,6 @@
 com\epf\rentmanager\servlet\UserEditServlet.class
 com\epf\rentmanager\servlet\UserDetailsServlet.class
+com\epf\rentmanager\servlet\RentsListServlet.class
 com\epf\rentmanager\model\Reservation.class
 com\epf\rentmanager\exception\DaoException.class
 com\epf\rentmanager\exception\ServiceException.class
@@ -14,7 +15,6 @@ com\epf\rentmanager\servlet\HomeServlet.class
 com\epf\rentmanager\dao\ClientDao.class
 com\epf\rentmanager\servlet\RentsEditServlet.class
 com\epf\rentmanager\servlet\UserListServlet.class
-com\epf\rentmanager\servlet\ReservationListServlet.class
 com\epf\rentmanager\service\ReservationService.class
 com\epf\rentmanager\model\WebConfiguration.class
 com\epf\rentmanager\ui\Test.class

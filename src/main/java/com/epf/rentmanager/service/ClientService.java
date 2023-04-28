@@ -25,7 +25,13 @@ public class ClientService {
 	private ClientService(ClientDao clientDao){
 		this.clientDao = clientDao;
 	}
-	
+
+	/**
+	 * Création d'un client
+	 * @param client le client créé
+	 * @return l'identifiant du client
+	 * @throws ServiceException
+	 */
 	public long create(Client client) throws ServiceException {
 		try {
 			return clientDao.create(client);
@@ -35,6 +41,12 @@ public class ClientService {
 		}
 	}
 
+	/**
+	 * Modification d'un client
+	 * @param client l'identifiant du client modifié
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws ServiceException
+	 */
 	public long edit(Client client) throws ServiceException {
 		try {
 			return clientDao.edit(client);
@@ -44,6 +56,12 @@ public class ClientService {
 		}
 	}
 
+	/**
+	 * Suppression d'un client
+	 * @param id l'identifiant du client supprimé
+	 * @return le nombre de lignes mises à jour dans la table
+	 * @throws ServiceException
+	 */
 	public long delete(int id) throws ServiceException {
 		try {
 			List<Reservation> reservationsClient = reservationService.findResaByClientId(id);
@@ -57,6 +75,12 @@ public class ClientService {
 		}
 	}
 
+	/**
+	 * Recherche d'un client avec son identifiant
+	 * @param id l'identifiant du client recherché
+	 * @return le client recherché
+	 * @throws ServiceException
+	 */
 	public Client findById(long id) throws ServiceException {
 		if(id<=0){
 			throw new ServiceException("L'id est inférieur ou égal à 0");
@@ -69,15 +93,12 @@ public class ClientService {
 		}
 	}
 
-	public List<Client> findAll() throws ServiceException {
-		try {
-			return clientDao.findAll();
-		} catch(DaoException e){
-			e.printStackTrace();
-			throw new ServiceException();
-		}
-	}
-
+	/**
+	 * Recherche d'un client avec son email
+	 * @param email
+	 * @return le client recherché
+	 * @throws ServiceException
+	 */
 	public Client findByEmail(String email) throws ServiceException {
 		try {
 			return clientDao.findByEmail(email);
@@ -87,6 +108,25 @@ public class ClientService {
 		}
 	}
 
+	/**
+	 * Recherche de tous les clients
+	 * @return une liste de tous les clients
+	 * @throws ServiceException
+	 */
+	public List<Client> findAll() throws ServiceException {
+		try {
+			return clientDao.findAll();
+		} catch(DaoException e){
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
+	/**
+	 * Compte le nombre de clients
+	 * @return le nombre de clients
+	 * @throws ServiceException
+	 */
 	public long count() throws ServiceException {
 		try{
 			return clientDao.count();

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 @Service
 public class Reservation {
 
@@ -46,34 +47,45 @@ public class Reservation {
         this.fin = fin;
     }
 
-    public Reservation(){
+    public Reservation() {
     }
 
+    /**
+     * Vérification que la réservation ne dure pas plus de 7 jours
+     * @param reservation la réservation que l'on veut créer ou modifier
+     * @return un boolean si la durée fait plus de 7 jours ou non
+     */
     public static boolean isBookedMore7Days(Reservation reservation) {
         Period period = Period.between(reservation.getDebut(), reservation.getFin());
         return period.getDays() > 7;
     }
 
+    /**
+     * Vérification que la voiture ne peut pas être réservée 2 fois le même jours
+     * @param reservation la reservation que l'on veut créer ou modifier
+     * @param reservationService le Service que l'on utilise pour comparer à la base de données
+     * @return un boolean si le mail est déjà pris ou non
+     */
     public static boolean isDateOk(Reservation reservation, ReservationService reservationService) throws ServiceException {
         List<Reservation> reservations = reservationService.findResaByVehicleId(reservation.getVehicle_id());
         LocalDate dateDebut = reservation.getDebut();
         LocalDate dateFin = reservation.getFin();
         boolean dateOK = true;
-        for(Reservation listeReservation : reservations){
-            if (listeReservation.getId() != reservation.getId()){
-                if (dateDebut.isAfter(listeReservation.getDebut()) && dateDebut.isBefore(listeReservation.getFin())){
+        for (Reservation listeReservation : reservations) {
+            if (listeReservation.getId() != reservation.getId()) {
+                if (dateDebut.isAfter(listeReservation.getDebut()) && dateDebut.isBefore(listeReservation.getFin())) {
                     dateOK = false;
                 }
-                if (dateFin.isAfter(listeReservation.getDebut()) && dateFin.isBefore(listeReservation.getFin())){
+                if (dateFin.isAfter(listeReservation.getDebut()) && dateFin.isBefore(listeReservation.getFin())) {
                     dateOK = false;
                 }
-                if (listeReservation.getDebut().isAfter(dateDebut) && listeReservation.getDebut().isBefore(dateFin)){
+                if (listeReservation.getDebut().isAfter(dateDebut) && listeReservation.getDebut().isBefore(dateFin)) {
                     dateOK = false;
                 }
-                if (dateDebut.compareTo(listeReservation.getDebut()) == 0 || dateDebut.compareTo(listeReservation.getFin()) == 0){
+                if (dateDebut.compareTo(listeReservation.getDebut()) == 0 || dateDebut.compareTo(listeReservation.getFin()) == 0) {
                     dateOK = false;
                 }
-                if (dateFin.compareTo(listeReservation.getDebut()) == 0 || dateFin.compareTo(listeReservation.getFin()) == 0){
+                if (dateFin.compareTo(listeReservation.getDebut()) == 0 || dateFin.compareTo(listeReservation.getFin()) == 0) {
                     dateOK = false;
                 }
             }
@@ -82,33 +94,42 @@ public class Reservation {
         return dateOK;
     }
 
-    public static boolean isNotBooked30Days(Reservation reservation, ReservationService reservationService) throws ServiceException{
+    /**
+     * Vérification que la voiture concernée par la réservation n'est pas réservée plus de 30 jours d'affilée
+     * @param reservation la reservation que l'on veut créer ou modifier
+     * @param reservationService le Service que l'on utilise pour comparer à la base de données
+     * @return un boolean si la réservation est conforme ou non
+     */
+    public static boolean isNotBooked30Days(Reservation reservation, ReservationService reservationService) throws ServiceException {
         List<Reservation> reservations = reservationService.findResaByVehicleId(reservation.vehicle_id);
         reservations.add(reservation);
         Collections.sort(reservations, Comparator.comparing(Reservation::getDebut));
-        LocalDate firstDate = reservations.get(0).debut;
         boolean isAvailableFor30Days = true;
         int cpt = 0;
-        for (int i = 0; i < 31; i++) {
-            LocalDate dateToCheck = firstDate.plusDays(i);
-            boolean isReserved = false;
-            for (Reservation listeReservation : reservations) {
-                if ((listeReservation.getDebut().isBefore(dateToCheck) || listeReservation.getDebut().isEqual(dateToCheck))
-                        && (listeReservation.getFin().isAfter(dateToCheck) || listeReservation.getFin().isEqual(dateToCheck))) {
-                    isReserved = true;
-                    break;
+        if (reservations.size() > 1) {
+            LocalDate lastDate = reservations.get(reservations.size() - 1).fin;
+            for (int i = 0; i < 31; i++) {
+                LocalDate dateToCheck = lastDate.minusDays(i);
+                boolean isReserved = false;
+                for (Reservation listeReservation : reservations) {
+                    if ((listeReservation.getDebut().isBefore(dateToCheck) || listeReservation.getDebut().isEqual(dateToCheck))
+                            && (listeReservation.getFin().isAfter(dateToCheck) || listeReservation.getFin().isEqual(dateToCheck))) {
+                        isReserved = true;
+                        break;
+                    }
                 }
-            }
-            if (!isReserved) {
-                cpt = 0;
-            } else {
-                cpt++;
-                if (cpt > 30) {
-                    isAvailableFor30Days = false;
-                    break;
+                if (!isReserved) {
+                    cpt = 0;
+                } else {
+                    cpt++;
+                    if (cpt > 30) {
+                        isAvailableFor30Days = false;
+                        break;
+                    }
                 }
             }
         }
+
         return isAvailableFor30Days;
     }
 

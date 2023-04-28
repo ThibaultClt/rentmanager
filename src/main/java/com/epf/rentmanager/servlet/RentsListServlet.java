@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/rents")
-public class ReservationListServlet extends HomeServlet {
+public class RentsListServlet extends HomeServlet {
 
     private static final long serialVersionUID = 1L;
 
