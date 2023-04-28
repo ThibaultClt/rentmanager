@@ -28,7 +28,7 @@ public class ClientDao {
 	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
 	private static final String COUNT_CLIENTS_QUERY = "SELECT COUNT(id) AS nb_client FROM Client;";
-	private static final String FIND_EMAIL_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE email=?;";
+	private static final String FIND_EMAIL_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client WHERE email=?;";
 
 	public long create(Client client) throws DaoException {
 		try (
@@ -63,7 +63,6 @@ public class ClientDao {
 			ps.setString(3, client.getEmail());
 			ps.setDate(4, Date.valueOf(client.getNaissance()));
 			ps.setInt(5, client.getId());
-			System.out.println("Executing SQL Query: " + ps.toString());
 			return ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -150,12 +149,13 @@ public class ClientDao {
 			pstatement.setString(1,email);
 			ResultSet rs = pstatement.executeQuery();
 			if (rs.next()){
+				int id = rs.getInt("id");
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
 				LocalDate date = rs.getDate("naissance").toLocalDate();
 				connection.close();
 				pstatement.close();
-				return new Client(nom,prenom,email,date);
+				return new Client(id,nom,prenom,email,date);
 			}else{
 				connection.close();
 				pstatement.close();

@@ -12,6 +12,7 @@ com\epf\rentmanager\servlet\UserCreateServlet.class
 com\epf\rentmanager\model\Vehicle.class
 com\epf\rentmanager\servlet\HomeServlet.class
 com\epf\rentmanager\dao\ClientDao.class
+com\epf\rentmanager\servlet\RentsEditServlet.class
 com\epf\rentmanager\servlet\UserListServlet.class
 com\epf\rentmanager\servlet\ReservationListServlet.class
 com\epf\rentmanager\service\ReservationService.class
@@ -19,6 +20,7 @@ com\epf\rentmanager\model\WebConfiguration.class
 com\epf\rentmanager\ui\Test.class
 com\epf\rentmanager\utils\IOUtils.class
 com\epf\rentmanager\servlet\RentsCreateServlet.class
+com\epf\rentmanager\servlet\VehicleEditServlet.class
 com\epf\rentmanager\persistence\FillDatabase.class
 com\epf\rentmanager\servlet\VehicleDeleteServlet.class
 com\epf\rentmanager\servlet\VehicleListServlet.class

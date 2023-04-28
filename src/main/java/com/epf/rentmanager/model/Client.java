@@ -18,9 +18,6 @@ public class Client {
     private String email;
     private LocalDate naissance;
 
-    @Autowired
-    ClientService clientService;
-
     public Client(String nom, String prenom, String email, LocalDate naissance) {
         this.nom = nom;
         this.prenom = prenom;
@@ -53,7 +50,7 @@ public class Client {
         boolean mailisvalid = true;
         try {
             Client mail = clientService.findByEmail(client.getEmail());
-            if (mail != null && client.getEmail() == mail.getEmail()) {
+            if (mail != null && client.getEmail() == mail.getEmail() && client.getId() != mail.getId()) {
                 mailisvalid = false;
             }
         }catch (ServiceException e){

@@ -37,9 +37,30 @@ public class ReservationService {
         }
     }
 
+    public long edit(Reservation reservation) throws ServiceException {
+        try {
+            return reservationDao.edit(reservation);
+        } catch(DaoException e){
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+    }
+
     public long delete(int id) throws ServiceException {
         try {
             return reservationDao.delete(id);
+        } catch(DaoException e){
+            e.printStackTrace();
+            throw new ServiceException();
+        }
+    }
+
+    public Reservation findById(long id) throws ServiceException {
+        if (id <= 0) {
+            throw new ServiceException("L'id est inférieur ou égal à 0");
+        }
+        try {
+            return reservationDao.findById(id);
         } catch(DaoException e){
             e.printStackTrace();
             throw new ServiceException();
