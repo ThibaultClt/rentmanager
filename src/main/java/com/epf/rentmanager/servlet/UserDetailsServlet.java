@@ -37,8 +37,8 @@ public class UserDetailsServlet extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id").toString());
             System.out.println(reservationService.findResaByClientId(id).toString());
             request.setAttribute("client",clientService.findById(id));
-            request.setAttribute("nb_reservations", reservationService.count());
-            request.setAttribute("nb_vehicle", vehicleService.count());
+            request.setAttribute("nb_reservations", reservationService.findResaByClientId(id).size());
+            request.setAttribute("nb_vehicle", vehicleService.countVehiclesClient(id));
             request.setAttribute("reservations", reservationService.findResaByClientId(id));
             request.setAttribute("vehicles",vehicleService.findByClientId(id));
         } catch (ServiceException e){

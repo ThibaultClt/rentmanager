@@ -88,5 +88,13 @@ public class VehicleService {
 			throw new ServiceException();
 		}
 	}
-	
+
+	public long countVehiclesClient(int id) throws ServiceException {
+		try{
+			return this.vehicleDao.countVehiclesClient(id);
+		} catch (DaoException e){
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
 }

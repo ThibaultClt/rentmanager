@@ -35,6 +35,20 @@ public class ClientService {
 		}
 	}
 
+	public long edit(Client client) throws ServiceException {
+		try {
+			System.out.println("Client ID: " + client.getId());
+			System.out.println("Client Nom: " + client.getNom());
+			System.out.println("Client Prenom: " + client.getPrenom());
+			System.out.println("Client Email: " + client.getEmail());
+			System.out.println("Client Naissance: " + client.getNaissance());
+			return clientDao.edit(client);
+		} catch(DaoException e){
+			e.printStackTrace();
+			throw new ServiceException();
+		}
+	}
+
 	public long delete(int id) throws ServiceException {
 		try {
 			List<Reservation> reservationsClient = reservationService.findResaByClientId(id);
@@ -47,6 +61,7 @@ public class ClientService {
 			throw new ServiceException();
 		}
 	}
+
 
 	public Client findById(long id) throws ServiceException {
 		if(id<=0){

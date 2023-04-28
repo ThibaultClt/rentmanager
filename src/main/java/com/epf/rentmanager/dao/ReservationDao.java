@@ -35,6 +35,7 @@ public class ReservationDao {
 	private static final String FIND_RESERVATIONS_BY_VEHICLE_QUERY = "SELECT id, client_id, debut, fin FROM Reservation WHERE vehicle_id=?;";
 	private static final String FIND_RESERVATIONS_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation;";
 	private static final String COUNT_RESERVATIONS_QUERY = "SELECT COUNT(id) AS nb_reservation FROM Reservation;";
+	private static final String COUNT_VEHICLES_BY_CLIENT_QUERY = "SELECT COUNT(id) AS nb_reservation FROM Reservation;";
 
 
 	public long create(Reservation reservation) throws DaoException {
